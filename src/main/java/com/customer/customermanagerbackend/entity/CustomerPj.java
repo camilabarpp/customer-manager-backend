@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.UniqueElements;
+import org.hibernate.validator.constraints.br.CNPJ;
 
 import java.time.LocalDate;
 
@@ -16,7 +18,9 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "customer_pj")
 public class CustomerPj extends Customer {
+    @Column(unique = true)
     private String cnpj;
+    @Column(unique = true)
     private String ie;
     @Enumerated(EnumType.STRING)
     @Column(name = "type")

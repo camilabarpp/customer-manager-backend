@@ -17,20 +17,18 @@ CREATE TABLE phone_number (
 
 CREATE TABLE customer_pf (
                              id BIGINT PRIMARY KEY,
-                             cpf VARCHAR(20),
-                             rg VARCHAR(20),
+                             cpf VARCHAR(20) unique,
+                             rg VARCHAR(20) unique,
                              type VARCHAR(10),
                              registration_date DATE,
-                             is_active BOOLEAN DEFAULT TRUE,
                              FOREIGN KEY (id) REFERENCES customer(id)
 );
 
 CREATE TABLE customer_pj (
                              id BIGINT PRIMARY KEY,
-                             cnpj VARCHAR(20),
-                             ie VARCHAR(20),
+                             cnpj VARCHAR(20) unique,
+                             ie VARCHAR(20) unique,
                              type VARCHAR(10),
                              registration_date DATE,
-                             is_active BOOLEAN DEFAULT TRUE,
                              FOREIGN KEY (id) REFERENCES customer(id)
 );

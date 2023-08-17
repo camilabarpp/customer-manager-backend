@@ -13,7 +13,9 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "customer_pf")
 public class CustomerPf extends Customer {
+    @Column(unique = true)
     private String cpf;
+    @Column(unique = true)
     private String rg;
     @Enumerated(EnumType.STRING)
     @Column(name = "type")

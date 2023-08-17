@@ -9,11 +9,12 @@ import java.util.List;
 @Data
 @Builder
 public class CustomerDto {
+    private Long id;
     private String name;
     private String type;
-    private String cpf;  // Para pessoa física (PF)
-    private String rg;   // Para pessoa física (PF)
-    private String cnpj; // Para pessoa jurídica (PJ)
-    private String ie;   // Para pessoa jurídica (PJ)
+    private String cpf;
+    private String rg;
+    private String cnpj;
+    private String ie;
     private List<PhoneNumber> phoneNumbers;
 }

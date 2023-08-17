@@ -4,6 +4,7 @@ import com.customer.customermanagerbackend.dto.CustomerDto;
 import com.customer.customermanagerbackend.entity.Customer;
 import com.customer.customermanagerbackend.entity.CustomerPf;
 import com.customer.customermanagerbackend.entity.CustomerPj;
+import com.customer.customermanagerbackend.entity.CustomerRequest;
 import com.customer.customermanagerbackend.enums.CustomerType;
 import com.customer.customermanagerbackend.repository.CustomerPfRepository;
 import com.customer.customermanagerbackend.repository.CustomerPjRepository;
@@ -36,14 +37,14 @@ public class CustomerService {
         return customerRepository.findByNameContaining(name);
     }
 
-    public CustomerDto createCustomer(CustomerDto customerDto) {
+    public CustomerDto createCustomer(CustomerRequest customerRequest) {
 
-        CustomerType type = CustomerType.valueOf(customerDto.getType());
+        CustomerType type = CustomerType.valueOf(customerRequest.getType().toString());
 
         if (type == CustomerType.PF) {
-            return customerPfToCustomerDto(createCustomerPf(customerDtoToCustomerPf(customerDto)));
+            return customerPfToCustomerDto(createCustomerPf(customerRequestToCustomerPf(customerRequest)));
         } else if (type == CustomerType.PJ) {
-            return customerPjToCustomerDto(createCustomerPj(customerDtoToCustomerPj(customerDto)));
+            return customerPjToCustomerDto(createCustomerPj(customerRequestToCustomerPj(customerRequest)));
         } else {
             throw new IllegalArgumentException("Invalid customer type: " + type);
         }

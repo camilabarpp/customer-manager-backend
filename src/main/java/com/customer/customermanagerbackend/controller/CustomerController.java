@@ -2,6 +2,7 @@ package com.customer.customermanagerbackend.controller;
 
 import com.customer.customermanagerbackend.dto.CustomerDto;
 import com.customer.customermanagerbackend.entity.Customer;
+import com.customer.customermanagerbackend.entity.CustomerRequest;
 import com.customer.customermanagerbackend.entity.Mapper;
 import com.customer.customermanagerbackend.service.CustomerService;
 import lombok.AllArgsConstructor;
@@ -9,8 +10,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
+import static com.customer.customermanagerbackend.entity.Mapper.customerDtoToCustomer;
+import static com.customer.customermanagerbackend.entity.Mapper.customerRequestToCustomerDto;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 
@@ -40,10 +44,10 @@ public class CustomerController {
     }
 
     @PostMapping
-    @ResponseStatus(CREATED)
-    public ResponseEntity<CustomerDto> createCustomer(@RequestBody CustomerDto customerDto) {
-        CustomerDto createdCustomer = customerService.createCustomer(customerDto);
-        return new ResponseEntity<>(createdCustomer, HttpStatus.CREATED);
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<CustomerDto> createCustomer(@RequestBody @Valid CustomerRequest customerRequest) {
+        CustomerDto createdCustomer = customerService.createCustomer(customerRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdCustomer);
     }
 
     @DeleteMapping("/{id}")

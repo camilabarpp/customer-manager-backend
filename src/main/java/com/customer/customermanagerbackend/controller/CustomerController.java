@@ -2,6 +2,7 @@ package com.customer.customermanagerbackend.controller;
 
 import com.customer.customermanagerbackend.dto.CustomerDto;
 import com.customer.customermanagerbackend.entity.Customer;
+import com.customer.customermanagerbackend.entity.Mapper;
 import com.customer.customermanagerbackend.service.CustomerService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -9,6 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 @RestController
 @RequestMapping("/api/customers")
@@ -24,8 +28,10 @@ public class CustomerController {
     }
 
     @PostMapping
-    public CustomerDto createCustomer(@RequestBody CustomerDto customerDto) {
-        return customerService.createCustomer(customerDto);
+    @ResponseStatus(CREATED)
+    public ResponseEntity<CustomerDto> createCustomer(@RequestBody CustomerDto customerDto) {
+        CustomerDto createdCustomer = customerService.createCustomer(customerDto);
+        return new ResponseEntity<>(createdCustomer, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
@@ -35,6 +41,7 @@ public class CustomerController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(NO_CONTENT)
     public ResponseEntity<?> deleteCustomer(@PathVariable Long id) {
         customerService.deleteCustomer(id);
         return new ResponseEntity<>(HttpStatus.OK);

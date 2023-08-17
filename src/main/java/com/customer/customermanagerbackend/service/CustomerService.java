@@ -37,9 +37,6 @@ public class CustomerService {
     public CustomerDto createCustomer(CustomerDto customerDto) {
 
         CustomerType type = CustomerType.valueOf(customerDto.getType());
-        if (type == null) {
-            throw new IllegalArgumentException("Customer type cannot be null");
-        }
 
         if (type == CustomerType.PF) {
             return customerPfToCustomerDto(createCustomerPf(customerDtoToCustomerPf(customerDto)));

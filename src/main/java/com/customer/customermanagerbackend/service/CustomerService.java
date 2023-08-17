@@ -9,12 +9,10 @@ import com.customer.customermanagerbackend.repository.CustomerPfRepository;
 import com.customer.customermanagerbackend.repository.CustomerPjRepository;
 import com.customer.customermanagerbackend.repository.CustomerRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.customer.customermanagerbackend.entity.Mapper.*;
 
@@ -32,6 +30,10 @@ public class CustomerService {
 
     public List<Customer> getAllCustomers() {
         return customerRepository.findAll();
+    }
+
+    public List<Customer> getCustomersByName(String name) {
+        return customerRepository.findByNameContaining(name);
     }
 
     public CustomerDto createCustomer(CustomerDto customerDto) {

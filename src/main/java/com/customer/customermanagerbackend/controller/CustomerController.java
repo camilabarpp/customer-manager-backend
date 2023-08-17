@@ -27,4 +27,22 @@ public class CustomerController {
     public CustomerDto createCustomer(@RequestBody CustomerDto customerDto) {
         return customerService.createCustomer(customerDto);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Customer> getCustomerById(@PathVariable Long id) {
+        Customer customer = customerService.getCustomerById(id);
+        return new ResponseEntity<>(customer, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteCustomer(@PathVariable Long id) {
+        customerService.deleteCustomer(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<CustomerDto> updateCustomer(@PathVariable Long id, @RequestBody CustomerDto customerDto) {
+        CustomerDto updatedCustomer = customerService.updateCustomer(id, customerDto);
+        return new ResponseEntity<>(updatedCustomer, HttpStatus.OK);
+    }
 }

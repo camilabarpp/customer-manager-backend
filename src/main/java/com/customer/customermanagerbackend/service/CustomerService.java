@@ -30,7 +30,6 @@ public class CustomerService {
         return customerRepository.findById(id).orElseThrow(() -> new RuntimeException("Customer by id " + id + " was not found"));
     }
 
-    @Query("SELECT c FROM Customer c WHERE c.isActive = true")
     public List<Customer> getAllCustomers() {
         return customerRepository.findAll();
     }
@@ -51,15 +50,38 @@ public class CustomerService {
         }
     }
 
-    // Create a CustomerPf
     public CustomerPf createCustomerPf(CustomerPf customerPf) {
         customerPf.setRegistrationDate(LocalDate.now());
         return customerPfRepository.save(customerPf);
     }
 
-    // Create a CustomerPj
     public CustomerPj createCustomerPj(CustomerPj customerPj) {
         customerPj.setRegistrationDate(LocalDate.now());
         return customerPjRepository.save(customerPj);
+    }
+
+    public CustomerDto updateCustomer(Long id, CustomerDto customerDto) {
+        Customer customer = getCustomerById(id);
+        CustomerType type = CustomerType.valueOf(customerDto.getType());
+
+        if (type == CustomerType.PF) {
+            return customerPfToCustomerDto(updateCustomerPf(customerDtoToCustomerPf(customerDto)));
+        } else if (type == CustomerType.PJ) {
+            return customerPjToCustomerDto(updateCustomerPj(customerDtoToCustomerPj(customerDto)));
+        } else {
+            throw new IllegalArgumentException("Invalid customer type: " + type);
+        }
+    }
+
+    public CustomerPf updateCustomerPf(CustomerPf customerPf) {
+        return customerPfRepository.save(customerPf);
+    }
+
+    public CustomerPj updateCustomerPj(CustomerPj customerPj) {
+        return customerPjRepository.save(customerPj);
+    }
+
+    public void deleteCustomer(Long id) {
+        customerRepository.deleteById(id);
     }
 }

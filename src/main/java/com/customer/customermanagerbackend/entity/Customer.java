@@ -1,6 +1,5 @@
 package com.customer.customermanagerbackend.entity;
 
-import com.customer.customermanagerbackend.enums.CustomerType;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.LazyCollection;
@@ -8,7 +7,6 @@ import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,15 +17,14 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "customer")
-//@SQLDelete(sql = "UPDATE Customer SET is_active = false WHERE id = ?")
-//@Where(clause = "isActive = true")
+@SQLDelete(sql = "UPDATE customer SET is_active = false WHERE id = ?")
+@Where(clause = "is_active = true")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @Column(name = "is_active")
     private boolean isActive = true;
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)

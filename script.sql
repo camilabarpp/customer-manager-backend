@@ -21,6 +21,7 @@ CREATE TABLE customer_pf (
                              rg VARCHAR(20),
                              type VARCHAR(10),
                              registration_date DATE,
+                             is_active BOOLEAN DEFAULT TRUE,
                              FOREIGN KEY (id) REFERENCES customer(id)
 );
 
@@ -30,5 +31,6 @@ CREATE TABLE customer_pj (
                              ie VARCHAR(20),
                              type VARCHAR(10),
                              registration_date DATE,
+                             is_active BOOLEAN DEFAULT TRUE,
                              FOREIGN KEY (id) REFERENCES customer(id)
 );

@@ -110,10 +110,11 @@ public class CustomerService {
 
             // Update Customer properties
             customer.setName(customerDto.getName());
+            customer.setPhoneNumbers(customerDto.getPhoneNumbers());
 
-            var phones = customer.getPhoneNumbers();
-            phones.addAll(customerDto.getPhoneNumbers());
-            phoneNumberRepository.saveAll(phones);
+            // Save updated Customer and PhoneNumbers
+            phoneNumberRepository.saveAll(customerDto.getPhoneNumbers());
+            customerRepository.save(customer);
 
             // Save updated Customer and PhoneNumbers
             customerRepository.save(customer);
@@ -144,8 +145,8 @@ public class CustomerService {
             customer.setPhoneNumbers(customerDto.getPhoneNumbers());
 
             // Save updated Customer and PhoneNumbers
-            customerRepository.save(customer);
             phoneNumberRepository.saveAll(customerDto.getPhoneNumbers());
+            customerRepository.save(customer);
 
             // Update CustomerPf properties
             Optional<CustomerPf> optionalCustomerPf = customerPfRepository.findById(id);

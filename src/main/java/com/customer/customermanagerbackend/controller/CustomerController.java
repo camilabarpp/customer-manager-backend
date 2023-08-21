@@ -42,7 +42,7 @@ public class CustomerController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<CustomerDto> createCustomer(@RequestBody CustomerRequest customerRequest) {
         CustomerDto createdCustomer = customerService.createCustomer(customerRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdCustomer);
+        return new ResponseEntity<>(createdCustomer, HttpStatus.CREATED);
     }
 
     @PatchMapping("pj/{id}")

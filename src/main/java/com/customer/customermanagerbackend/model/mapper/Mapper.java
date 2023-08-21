@@ -28,6 +28,26 @@ public class Mapper {
         return customerPj;
     }
 
+    public static CustomerRequest customerPfToCustomerRequest(CustomerPf customerPf) {
+        return CustomerRequest.builder()
+                .name(customerPf.getName())
+                .type(customerPf.getType())
+                .phoneNumbers(customerPf.getPhoneNumbers())
+                .cpf(customerPf.getCpf())
+                .rg(customerPf.getRg())
+                .build();
+    }
+
+    public static CustomerRequest customerPjToCustomerRequest(CustomerPj customerPj) {
+        return CustomerRequest.builder()
+                .name(customerPj.getName())
+                .type(customerPj.getType())
+                .phoneNumbers(customerPj.getPhoneNumbers())
+                .cnpj(customerPj.getCnpj())
+                .ie(customerPj.getIe())
+                .build();
+    }
+
     public static CustomerDto customerRequestToCustomerDto(CustomerRequest customerRequest) {
         return CustomerDto.builder()
                 .name(customerRequest.getName())

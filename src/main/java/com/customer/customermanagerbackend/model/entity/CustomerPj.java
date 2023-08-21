@@ -2,10 +2,7 @@ package com.customer.customermanagerbackend.model.entity;
 
 import com.customer.customermanagerbackend.enums.CustomerType;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;

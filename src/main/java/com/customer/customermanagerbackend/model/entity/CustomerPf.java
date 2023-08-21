@@ -1,9 +1,11 @@
 package com.customer.customermanagerbackend.model.entity;
 
-import com.customer.customermanagerbackend.common.exception.helper.ErrorMessage;
 import com.customer.customermanagerbackend.enums.CustomerType;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;

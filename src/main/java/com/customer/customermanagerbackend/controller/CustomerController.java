@@ -10,12 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
-import static com.customer.customermanagerbackend.entity.Mapper.customerDtoToCustomer;
-import static com.customer.customermanagerbackend.entity.Mapper.customerRequestToCustomerDto;
-import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 @RestController
@@ -45,7 +41,7 @@ public class CustomerController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<CustomerDto> createCustomer(@RequestBody @Valid CustomerRequest customerRequest) {
+    public ResponseEntity<CustomerDto> createCustomer(@RequestBody CustomerRequest customerRequest) {
         CustomerDto createdCustomer = customerService.createCustomer(customerRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdCustomer);
     }
@@ -58,8 +54,20 @@ public class CustomerController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CustomerDto> updateCustomer(@PathVariable Long id, @RequestBody CustomerDto customerDto) {
-        CustomerDto updatedCustomer = customerService.updateCustomer(id, customerDto);
+    public ResponseEntity<Customer> updateCustomer(@PathVariable Long id, @RequestBody CustomerRequest customerDto) {
+        Customer updatedCustomer = customerService.updateCustomer(id, customerDto);
+        return new ResponseEntity<>(updatedCustomer, HttpStatus.OK);
+    }
+
+    @PatchMapping("pj/{id}")
+    public ResponseEntity<Customer> updateCustomerPj(@PathVariable Long id, @RequestBody CustomerRequest customerDto) {
+        Customer updatedCustomer = customerService.updateCustomerPj(id, customerDto);
+        return new ResponseEntity<>(updatedCustomer, HttpStatus.OK);
+    }
+
+    @PatchMapping("pf/{id}")
+    public ResponseEntity<Customer> updateCustomerPf(@PathVariable Long id, @RequestBody CustomerRequest customerDto) {
+        Customer updatedCustomer = customerService.updateCustomerPf(id, customerDto);
         return new ResponseEntity<>(updatedCustomer, HttpStatus.OK);
     }
 }

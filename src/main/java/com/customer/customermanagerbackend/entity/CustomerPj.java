@@ -6,9 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.validator.constraints.UniqueElements;
-import org.hibernate.validator.constraints.br.CNPJ;
 
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
 @Getter
@@ -19,6 +18,7 @@ import java.time.LocalDate;
 @Table(name = "customer_pj")
 public class CustomerPj extends Customer {
     @Column(unique = true)
+    @NotBlank(message = "CNPJ is required")
     private String cnpj;
     @Column(unique = true)
     private String ie;

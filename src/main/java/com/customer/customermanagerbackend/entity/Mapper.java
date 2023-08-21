@@ -1,7 +1,6 @@
 package com.customer.customermanagerbackend.entity;
 
 import com.customer.customermanagerbackend.dto.CustomerDto;
-import com.customer.customermanagerbackend.enums.CustomerType;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass

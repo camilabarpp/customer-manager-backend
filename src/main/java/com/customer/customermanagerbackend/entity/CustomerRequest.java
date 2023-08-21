@@ -5,9 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.br.CNPJ;
+import org.hibernate.validator.constraints.br.CPF;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @NoArgsConstructor
@@ -15,15 +15,13 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class CustomerRequest {
-    @NotNull
-    @NotBlank(message = "Name is required")
     private String name;
-    @NotBlank(message = "Type is required")
     private CustomerType type;
+    @CPF(message = "CPF is invalid")
     private String cpf;
+    @CNPJ(message = "CNPJ is invalid")
     private String cnpj;
     private String rg;
     private String ie;
-    @NotBlank(message = "Registration date is required")
     private List<PhoneNumber> phoneNumbers;
 }

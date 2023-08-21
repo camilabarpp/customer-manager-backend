@@ -2,8 +2,6 @@ package com.customer.customermanagerbackend.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
@@ -26,8 +24,7 @@ public class Customer {
     private Long id;
     private String name;
     private boolean isActive = true;
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany()
     @JoinColumn(name = "CUSTOMER_ID")
     private List<PhoneNumber> phoneNumbers = new ArrayList<>();
 

@@ -1,4 +1,4 @@
-package com.customer.customermanagerbackend.entity;
+package com.customer.customermanagerbackend.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

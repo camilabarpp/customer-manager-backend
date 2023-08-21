@@ -1,5 +1,6 @@
-package com.customer.customermanagerbackend.entity;
+package com.customer.customermanagerbackend.model.request;
 
+import com.customer.customermanagerbackend.model.entity.PhoneNumber;
 import com.customer.customermanagerbackend.enums.CustomerType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,6 +11,9 @@ import org.hibernate.validator.constraints.br.CPF;
 
 import java.util.List;
 
+import static com.customer.customermanagerbackend.common.exception.helper.ErrorMessage.CNPJ_IS_INVALID;
+import static com.customer.customermanagerbackend.common.exception.helper.ErrorMessage.CPF_IS_INVALID;
+
 @NoArgsConstructor
 @Getter
 @AllArgsConstructor
@@ -17,9 +21,9 @@ import java.util.List;
 public class CustomerRequest {
     private String name;
     private CustomerType type;
-    @CPF(message = "CPF is invalid")
+    @CPF(message = CPF_IS_INVALID)
     private String cpf;
-    @CNPJ(message = "CNPJ is invalid")
+    @CNPJ(message = CNPJ_IS_INVALID)
     private String cnpj;
     private String rg;
     private String ie;

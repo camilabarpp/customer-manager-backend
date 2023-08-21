@@ -1,6 +1,10 @@
-package com.customer.customermanagerbackend.entity;
+package com.customer.customermanagerbackend.model.mapper;
 
 import com.customer.customermanagerbackend.dto.CustomerDto;
+import com.customer.customermanagerbackend.model.entity.Customer;
+import com.customer.customermanagerbackend.model.entity.CustomerPf;
+import com.customer.customermanagerbackend.model.entity.CustomerPj;
+import com.customer.customermanagerbackend.model.request.CustomerRequest;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass

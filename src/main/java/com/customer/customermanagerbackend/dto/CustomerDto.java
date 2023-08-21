@@ -1,6 +1,6 @@
 package com.customer.customermanagerbackend.dto;
 
-import com.customer.customermanagerbackend.entity.PhoneNumber;
+import com.customer.customermanagerbackend.model.entity.PhoneNumber;
 import lombok.Builder;
 import lombok.Data;
 

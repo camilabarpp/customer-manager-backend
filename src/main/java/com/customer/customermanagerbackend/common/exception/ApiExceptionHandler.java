@@ -1,5 +1,7 @@
-package com.customer.customermanagerbackend.common.exception.errorresponse;
+package com.customer.customermanagerbackend.common.exception;
 
+import com.customer.customermanagerbackend.common.exception.errorresponse.ErrorResponse;
+import com.customer.customermanagerbackend.common.exception.exceptions.*;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -23,6 +25,50 @@ public class ApiExceptionHandler extends DefaultResponseErrorHandler {
                 .timestamp(LocalDateTime.now())
                 .message(ex.getMessage())
                 .field(NOT_FOUND.name())
+                .parameter(ex.getClass().getSimpleName())
+                .build();
+    }
+
+    @ExceptionHandler(RgAlreadyExistsException.class)
+    @ResponseStatus(BAD_REQUEST)
+    public ErrorResponse rgAlreadyExistsExceptionHandler(RgAlreadyExistsException ex) {
+        return ErrorResponse.builder()
+                .timestamp(LocalDateTime.now())
+                .message(ex.getMessage())
+                .field(BAD_REQUEST.name())
+                .parameter(ex.getClass().getSimpleName())
+                .build();
+    }
+
+    @ExceptionHandler(CnpjAlreadyExistsException.class)
+    @ResponseStatus(BAD_REQUEST)
+    public ErrorResponse cnpjAlreadyExistsExceptionHandler(CnpjAlreadyExistsException ex) {
+        return ErrorResponse.builder()
+                .timestamp(LocalDateTime.now())
+                .message(ex.getMessage())
+                .field(BAD_REQUEST.name())
+                .parameter(ex.getClass().getSimpleName())
+                .build();
+    }
+
+    @ExceptionHandler(IeAlreadyExistsException.class)
+    @ResponseStatus(BAD_REQUEST)
+    public ErrorResponse ieAlreadyExistsExceptionHandler(IeAlreadyExistsException ex) {
+        return ErrorResponse.builder()
+                .timestamp(LocalDateTime.now())
+                .message(ex.getMessage())
+                .field(BAD_REQUEST.name())
+                .parameter(ex.getClass().getSimpleName())
+                .build();
+    }
+
+    @ExceptionHandler(CpfAlreadyExistsException.class)
+    @ResponseStatus(BAD_REQUEST)
+    public ErrorResponse cpfAlreadyExistsExceptionHandler(CpfAlreadyExistsException ex) {
+        return ErrorResponse.builder()
+                .timestamp(LocalDateTime.now())
+                .message(ex.getMessage())
+                .field(BAD_REQUEST.name())
                 .parameter(ex.getClass().getSimpleName())
                 .build();
     }

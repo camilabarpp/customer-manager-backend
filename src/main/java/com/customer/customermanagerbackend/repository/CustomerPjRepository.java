@@ -1,6 +1,6 @@
 package com.customer.customermanagerbackend.repository;
 
-import com.customer.customermanagerbackend.entity.CustomerPj;
+import com.customer.customermanagerbackend.model.entity.CustomerPj;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,20 +1,26 @@
 package com.customer.customermanagerbackend.service;
 
+import com.customer.customermanagerbackend.common.exception.exceptions.*;
 import com.customer.customermanagerbackend.dto.CustomerDto;
-import com.customer.customermanagerbackend.entity.*;
 import com.customer.customermanagerbackend.enums.CustomerType;
 import com.customer.customermanagerbackend.repository.CustomerPfRepository;
 import com.customer.customermanagerbackend.repository.CustomerPjRepository;
 import com.customer.customermanagerbackend.repository.CustomerRepository;
 import com.customer.customermanagerbackend.repository.PhoneNumberRepository;
 import lombok.AllArgsConstructor;
+import com.customer.customermanagerbackend.model.entity.Customer;
+import com.customer.customermanagerbackend.model.entity.CustomerPf;
+import com.customer.customermanagerbackend.model.entity.CustomerPj;
+import com.customer.customermanagerbackend.model.request.CustomerRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-import static com.customer.customermanagerbackend.entity.Mapper.*;
+import static com.customer.customermanagerbackend.common.exception.helper.ErrorMessage.CUSTOMER_NOT_FOUND;
+import static com.customer.customermanagerbackend.common.exception.helper.ErrorMessage.CUSTOMER_TYPE_INVALID;
+import static com.customer.customermanagerbackend.model.mapper.Mapper.*;
 
 @Service
 @AllArgsConstructor
@@ -26,7 +32,7 @@ public class CustomerService {
     private final PhoneNumberRepository phoneNumberRepository;
 
     public Customer getCustomerById(Long id) {
-        return customerRepository.findById(id).orElseThrow(() -> new RuntimeException("Customer by id " + id + " was not found"));
+        return customerRepository.findById(id).orElseThrow(() -> new ApiNotFoundException(CUSTOMER_NOT_FOUND + id));
     }
 
     public List<Customer> getAllCustomers() {
@@ -46,7 +52,7 @@ public class CustomerService {
         } else if (type == CustomerType.PJ) {
             return customerPjToCustomerDto(createCustomerPj(customerRequestToCustomerPj(customerRequest)));
         } else {
-            throw new IllegalArgumentException("Invalid customer type: " + type);
+            throw new IllegalArgumentException(CUSTOMER_TYPE_INVALID + type);
         }
     }
 
@@ -55,9 +61,9 @@ public class CustomerService {
         var rg = customerPfRepository.existsByRg(customerPf.getRg());
 
         if (cpf) {
-            throw new RuntimeException("CPF already exists");
+            throw new CpfAlreadyExistsException();
         } else if (rg) {
-            throw new RuntimeException("RG already exists");
+            throw new RgAlreadyExistsException();
         } else {
             customerPf.setRegistrationDate(LocalDate.now());
             phoneNumberRepository.saveAll(customerPf.getPhoneNumbers());
@@ -70,36 +76,14 @@ public class CustomerService {
         var ie = customerPjRepository.existsByIe(customerPj.getIe());
 
         if (cnpj) {
-            throw new RuntimeException("CNPJ already exists");
+            throw new CnpjAlreadyExistsException();
         } else if (ie) {
-            throw new RuntimeException("IE already exists");
+            throw new IeAlreadyExistsException();
         } else {
             customerPj.setRegistrationDate(LocalDate.now());
             phoneNumberRepository.saveAll(customerPj.getPhoneNumbers());
             return customerPjRepository.save(customerPj);
         }
-    }
-
-    public Customer updateCustomer(Long id, CustomerRequest customerDto) {
-        return customerRepository.findById(id)
-                .map(customer -> {
-                    customer.setName(customerDto.getName());
-                    customer.setPhoneNumbers(customerDto.getPhoneNumbers());
-                    if (customerDto.getType().equals("PF")) {
-                        CustomerPf customerPf = customerRequestToCustomerPf(customerDto);
-                        customerPf.setId(customer.getId());
-                        customerPf.setCpf(customerDto.getCpf());
-                        customerPf.setRg(customerDto.getRg());
-                        customerPfRepository.save(customerPf);
-                    } else {
-                        CustomerPj customerPj = customerRequestToCustomerPj(customerDto);
-                        customerPj.setCnpj(customerDto.getCnpj());
-                        customerPj.setIe(customerDto.getIe());
-                        customerPjRepository.save(customerPj);
-                    }
-                    return customerRepository.save(customer);
-                })
-                .orElseThrow(() -> new RuntimeException("Customer by id " + id + " was not found"));
     }
 
     public Customer updateCustomerPj(Long id, CustomerRequest customerDto) {
@@ -129,7 +113,7 @@ public class CustomerService {
 
             return customer;
         } else {
-            throw new RuntimeException("Customer by id " + id + " was not found");
+            throw new ApiNotFoundException(CUSTOMER_NOT_FOUND + id);
         }
     }
 
@@ -158,12 +142,16 @@ public class CustomerService {
 
             return customer;
         } else {
-            throw new RuntimeException("Customer by id " + id + " was not found");
+            throw new ApiNotFoundException(CUSTOMER_NOT_FOUND + id);
         }
     }
 
 
     public void deleteCustomer(Long id) {
         customerRepository.deleteById(id);
+    }
+
+    public void deleteAllCustomers() {
+        customerRepository.deleteAll();
     }
 }
